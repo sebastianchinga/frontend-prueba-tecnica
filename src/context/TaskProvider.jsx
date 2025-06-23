@@ -9,7 +9,7 @@ export const TaskProvider = ({ children }) => {
 
     const { auth } = useAuth();
     const [tareas, setTareas] = useState([]);
-    const [estado, setEstado] = useState('');
+    const [estado, setEstado] = useState();
 
     useEffect(() => {
         const getTasks = async () => {
@@ -23,20 +23,49 @@ export const TaskProvider = ({ children }) => {
                 }
             }
 
-            // Si hay contenido en estado filtramos las tareas, caso contrario traemos todas las tareas
-            if (estado) {
-                const { data } = await clienteAxios(`/tareas/filter-task/${estado}`, config);
-                // Seteamos el array tareas
-                setTareas(data)
-            } else {
+            try {
                 const { data } = await clienteAxios('/tareas/', config);
                 // Seteamos el array tareas
                 setTareas(data)
+            } catch (error) {
+                console.log(error.response.data.msg);
+            }
+        }
+        getTasks()
+    }, [auth])
+
+    useEffect(() => {
+        const filterTasks = async () => {
+            // Obtener token
+            const token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            if (estado) {
+                try {
+                    const {data} = await clienteAxios(`/tareas/filter-task/${Number(estado)}`, config)
+                    console.log(data);
+                } catch (error) {
+                    console.log(error.response.data);
+                }
+                return;
+            }
+
+            try {
+                const { data } = await clienteAxios('/tareas/', config);
+                // Seteamos el array tareas
+                setTareas(data)
+            } catch (error) {
+                console.log(error.response.data.msg);
             }
 
         }
-        getTasks()
-    }, [auth, estado])
+        filterTasks()
+    }, [estado])
 
     const saveTask = async (task) => {
         const token = localStorage.getItem('token');
