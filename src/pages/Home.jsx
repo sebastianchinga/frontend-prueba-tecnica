@@ -3,7 +3,7 @@ import Task from "../components/Task";
 import useTask from "../hooks/useTask"
 
 const Home = () => {
-    const { tareas } = useTask();
+    const { tareas, setEstado } = useTask();
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -27,6 +27,7 @@ const Home = () => {
                         Filtrar por estado:
                     </label>
                     <select
+                        onChange={(e) => setEstado(e.target.value)}
                         id="filtro"
                         className="w-full md:w-64 p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     >

@@ -1,15 +1,20 @@
 import { useState, createContext } from "react";
 import clienteAxios from "../config/axios";
 import { useEffect } from "react";
+import useAuth from "../hooks/useAuth";
 
 const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
 
+    const { auth } = useAuth();
     const [tareas, setTareas] = useState([]);
+    const [estado, setEstado] = useState('');
 
     useEffect(() => {
         const getTasks = async () => {
+
+            // Obtener token
             const token = localStorage.getItem('token');
             const config = {
                 headers: {
@@ -18,12 +23,20 @@ export const TaskProvider = ({ children }) => {
                 }
             }
 
-            const { data } = await clienteAxios('/tareas/', config);
-            setTareas(data)
+            // Si hay contenido en estado filtramos las tareas, caso contrario traemos todas las tareas
+            if (estado) {
+                const { data } = await clienteAxios(`/tareas/filter-task/${estado}`, config);
+                // Seteamos el array tareas
+                setTareas(data)
+            } else {
+                const { data } = await clienteAxios('/tareas/', config);
+                // Seteamos el array tareas
+                setTareas(data)
+            }
 
         }
         getTasks()
-    }, [])
+    }, [auth, estado])
 
     const saveTask = async (task) => {
         const token = localStorage.getItem('token');
@@ -70,7 +83,8 @@ export const TaskProvider = ({ children }) => {
         <TaskContext.Provider value={{
             saveTask,
             tareas,
-            cambiarEstado
+            cambiarEstado,
+            setEstado
         }}>
             {children}
         </TaskContext.Provider>
