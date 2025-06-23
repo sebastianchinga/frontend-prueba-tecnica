@@ -19,8 +19,9 @@ const Registro = () => {
                 msg: 'Completa los campos',
                 error: true
             })
+            return
         }
-        const {data} = await clienteAxios.post('/api/usuarios/registrar', {nombre, email, password});
+        const {data} = await clienteAxios.post('/usuarios/registrar', {nombre, email, password});
         setAlerta({
             msg: data.msg
         })

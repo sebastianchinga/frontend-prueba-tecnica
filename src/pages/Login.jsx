@@ -1,5 +1,44 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, redirect, useNavigate } from "react-router-dom";
+import Alerta from "../components/Alerta";
+import clienteAxios from "../config/axios";
+import useAuth from "../hooks/useAuth";
 const Login = () => {
+
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('')
+  const [alerta, setAlerta] = useState({});
+
+  const { setAuth } = useAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if ([email, password].includes(" ")) {
+      setAlerta({
+        msg: 'Completa los campos',
+        error: true
+      })
+      return;
+    }
+
+    try {
+      const { data } = await clienteAxios.post('/usuarios', { email, password });
+      localStorage.setItem('token', data.token);
+      setAuth(data);
+      navigate('/admin')
+      
+    } catch (error) {
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true
+      })
+    }
+  }
+
+  const { msg } = alerta
   return (
     <>
       {/* Header */}
@@ -9,8 +48,9 @@ const Login = () => {
         </h1>
         <p className="text-sm text-gray-600">Ingresa a tu cuenta</p>
       </div>
+      {msg && <Alerta alerta={alerta} />}
       {/* Login Form */}
-      <form className="space-y-6" action="#" method="POST">
+      <form className="space-y-6" onSubmit={handleSubmit}>
         {/* Email Field */}
         <div>
           <label
@@ -20,10 +60,11 @@ const Login = () => {
             Correo electrónico
           </label>
           <input
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             type="email"
             id="email"
             name="email"
-            required=""
             className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500 transition-colors"
             placeholder="correo@ejemplo.com"
           />
@@ -37,10 +78,11 @@ const Login = () => {
             Contraseña
           </label>
           <input
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             type="password"
             id="password"
             name="password"
-            required=""
             className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500 transition-colors"
             placeholder="Tu contraseña"
           />
