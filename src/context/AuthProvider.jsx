@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
             try {
                 const { data } = await clienteAxios('/usuarios/perfil', config);
                 setAuth(data)
-
+                
             } catch (error) {
                 setAuth({})
             }
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
         }
 
         autenticarUsuario();
-    })
+    },[])
 
     return (
         <AuthContext.Provider
