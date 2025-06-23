@@ -6,12 +6,24 @@ const TaskContext = createContext();
 export const TaskProvider = ({ children }) => {
 
     const saveTask = async (task) => {
-        try {
-            const { data } = await clienteAxios.post('/new-task');
-            console.log(data);
+        const token = localStorage.getItem('token');
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
 
+        try {
+            const { data } = await clienteAxios.post('/tareas/new-task', task, config);
+            return {
+                msg: 'Tarea agregada'
+            }
         } catch (error) {
-            console.log(error);
+            return {
+                msg: 'Hubo un error',
+                error: true
+            }
         }
     }
 
