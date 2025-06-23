@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const Login = () => {
   return (
     <>
@@ -70,14 +71,13 @@ const Login = () => {
       </form>
       {/* Sign Up Link */}
       <div className="text-center mt-6 pt-6 border-t border-gray-200">
+
         <p className="text-sm text-gray-600">
-          ¿No tienes cuenta?
-          <a
-            href="#"
-            className="text-gray-900 hover:text-gray-700 font-medium transition-colors"
-          >
+          ¿No tienes cuenta?{" "}
+          <Link to="registro" className="text-gray-900 hover:text-gray-700 font-medium transition-colors">
             Crear cuenta
-          </a>
+          </Link>
+
         </p>
       </div>
     </>

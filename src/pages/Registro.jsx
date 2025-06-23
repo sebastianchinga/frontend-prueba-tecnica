@@ -1,6 +1,36 @@
-import React from 'react'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import Alerta from '../components/Alerta';
+import clienteAxios from '../config/axios';
 
 const Registro = () => {
+
+    const [nombre, setNombre] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('')
+
+    const [alerta, setAlerta] = useState({});
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if ([nombre, email, password].includes("")) {
+            setAlerta({
+                msg: 'Completa los campos',
+                error: true
+            })
+        }
+        const {data} = await clienteAxios.post('/api/usuarios/registrar', {nombre, email, password});
+        setAlerta({
+            msg: data.msg
+        })
+        setNombre('')
+        setEmail('')
+        setPassword('')
+    }
+
+    const { msg } = alerta
+
     return (
         <>
             {/* Header */}
@@ -8,21 +38,23 @@ const Registro = () => {
                 <h1 className="text-2xl font-semibold text-gray-900 mb-2">Crear Cuenta</h1>
                 <p className="text-sm text-gray-600">Completa tus datos para registrarte</p>
             </div>
+            {msg && <Alerta alerta={alerta} />}
             {/* Register Form */}
-            <form className="space-y-5" action="#" method="POST">
+            <form className="space-y-5" onSubmit={handleSubmit}>
                 {/* Full Name Field */}
                 <div>
                     <label
-                        htmlFor="fullName"
+                        htmlFor="nombre"
                         className="block text-sm font-medium text-gray-700 mb-2"
                     >
                         Nombre completo
                     </label>
                     <input
+                        value={nombre}
+                        onChange={e => setNombre(e.target.value)}
                         type="text"
-                        id="fullName"
-                        name="fullName"
-                        required=""
+                        id="nombre"
+                        name="nombre"
                         className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500 transition-colors"
                         placeholder="Tu nombre completo"
                     />
@@ -36,10 +68,11 @@ const Registro = () => {
                         Correo electrónico
                     </label>
                     <input
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                         type="email"
                         id="email"
                         name="email"
-                        required=""
                         className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500 transition-colors"
                         placeholder="correo@ejemplo.com"
                     />
@@ -53,11 +86,11 @@ const Registro = () => {
                         Contraseña
                     </label>
                     <input
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
                         type="password"
                         id="password"
                         name="password"
-                        required=""
-                        minLength={8}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500 transition-colors"
                         placeholder="Mínimo 8 caracteres"
                     />
@@ -73,13 +106,10 @@ const Registro = () => {
             {/* Login Link */}
             <div className="text-center mt-6 pt-6 border-t border-gray-200">
                 <p className="text-sm text-gray-600">
-                    ¿Ya tienes cuenta?
-                    <a
-                        href="#"
-                        className="text-gray-900 hover:text-gray-700 font-medium transition-colors"
-                    >
+                    ¿Ya tienes cuenta?{" "}
+                    <Link className="text-gray-900 hover:text-gray-700 font-medium transition-colors" to="/">
                         Iniciar sesión
-                    </a>
+                    </Link>
                 </p>
             </div>
         </>
