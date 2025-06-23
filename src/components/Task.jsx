@@ -1,16 +1,8 @@
-import clienteAxios from "../config/axios";
+import useTask from "../hooks/useTask"
 
-const Task = ({ task, onUpdate }) => {
+const Task = ({ task }) => {
     const { id, titulo, descripcion, estado } = task
-
-    const cambiarEstado = async () => {
-        try {
-            const { data } = await clienteAxios.put(`change-task/${id}`);
-            onUpdate(data); // actualiza el estado global con la tarea nueva
-        } catch (error) {
-            console.error('Error al cambiar estado:', error.response?.data?.msg || error.message);
-        }
-    };
+    const { cambiarEstado } = useTask();
 
     return (
         <div className={`rounded-lg shadow-md overflow-hidden border ${estado ? 'border-green-200 bg-green-50' : 'border-yellow-200 bg-yellow-50'}`}>
@@ -32,7 +24,7 @@ const Task = ({ task, onUpdate }) => {
                 <p className="text-gray-600 mb-4">{descripcion}</p>
 
                 <button
-                    onClick={cambiarEstado}
+                    onClick={() => cambiarEstado(task)}
                     className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${estado ? 'bg-yellow-500 hover:bg-yellow-600 text-white' : 'bg-green-500 hover:bg-green-600'} text-white`}>
                     {estado ? 'Marcar como pendiente' : 'Marcar como completado'}
                 </button>

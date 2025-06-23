@@ -1,6 +1,9 @@
 import Formulario from "../components/Formulario"
+import Task from "../components/Task";
+import useTask from "../hooks/useTask"
 
 const Home = () => {
+    const { tareas } = useTask();
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -37,13 +40,12 @@ const Home = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     {/* Listado de tareas */}
-                    {/* {tasks.map((task) => (
-                            <Task
+                    {tareas.map((task) => (
+                        <Task
                             key={task.id}
                             task={task}
-                            onUpdate={actualizarTarea}
-                            />
-                        ))} */}
+                        />
+                    ))}
 
                 </div>
             </div>
