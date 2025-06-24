@@ -48,7 +48,7 @@ export const TaskProvider = ({ children }) => {
             if (estado) {
                 try {
                     const {data} = await clienteAxios(`/tareas/filter-task/${Number(estado)}`, config)
-                    console.log(data);
+                    setTareas(data)
                 } catch (error) {
                     console.log(error.response.data);
                 }

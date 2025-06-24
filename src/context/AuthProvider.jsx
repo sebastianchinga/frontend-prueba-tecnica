@@ -6,6 +6,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
+    const navigate = useNavigate();
     const [auth, setAuth] = useState({});
     const [cargando, setCargando] = useState(true);
 
@@ -41,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     const cerrarSesion = () => {
         localStorage.removeItem('token');
         setAuth({});
-        useNavigate('/');
+        navigate('/')
     }
 
     return (

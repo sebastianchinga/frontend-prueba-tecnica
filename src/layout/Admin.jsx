@@ -4,6 +4,10 @@ import useAuth from '../hooks/useAuth'
 const Admin = () => {
     const { auth, cargando, cerrarSesion } = useAuth();
 
+    function obtenerIniciales(nombre) {
+        return nombre.split(" ").map(letra => letra.charAt(0).toUpperCase()).join("");
+    }
+
     if (cargando) return 'Cargando...';
     return (
         <>
@@ -19,9 +23,9 @@ const Admin = () => {
                             {/* Información del usuario (opcional) */}
                             <div className="hidden sm:flex items-center space-x-2">
                                 <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <span className="text-white text-sm font-medium">U</span>
+                                    <span className="text-white text-sm font-medium">{auth?.nombre && obtenerIniciales(auth.nombre)}</span>
                                 </div>
-                                <span className="text-gray-700 text-sm">Usuario</span>
+                                <span className="text-gray-700 text-sm">{auth?.nombre && auth.nombre}</span>
                             </div>
                             {/* Botón de cerrar sesión */}
                             <button
