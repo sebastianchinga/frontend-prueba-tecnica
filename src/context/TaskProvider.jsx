@@ -28,7 +28,7 @@ export const TaskProvider = ({ children }) => {
                 // Seteamos el array tareas
                 setTareas(data)
             } catch (error) {
-                console.log(error.response.data.msg);
+                setTareas([])
             }
         }
         getTasks()
@@ -60,7 +60,7 @@ export const TaskProvider = ({ children }) => {
                 // Seteamos el array tareas
                 setTareas(data)
             } catch (error) {
-                console.log(error.response.data.msg);
+                setTareas([])
             }
 
         }

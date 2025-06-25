@@ -6,6 +6,8 @@ import Login from './pages/Login'
 import { AuthProvider } from './context/AuthProvider'
 import { TaskProvider } from './context/TaskProvider'
 import Registro from './pages/Registro'
+import ConfirmarCuenta from './pages/ConfirmarCuenta'
+import OlvidePassword from './pages/OlvidePassword'
 
 function App() {
 
@@ -18,6 +20,9 @@ function App() {
               <Route path='/' element={<Auth />}>
                 <Route index element={<Login />} />
                 <Route path='registro' element={<Registro />} />
+                <Route path='confirmar-cuenta/:token' element={<ConfirmarCuenta />} />
+                <Route path='olvide-password' element={<OlvidePassword />} />
+                <Route path='cambiar-password/:token' element={<OlvidePassword />} />
               </Route>
 
               <Route path='admin' element={<Admin />}>
