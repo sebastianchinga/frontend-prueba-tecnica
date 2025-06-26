@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Alerta from "../components/Alerta";
 import clienteAxios from "../config/axios";
 import useAuth from "../hooks/useAuth";
@@ -96,12 +96,7 @@ const Login = () => {
             />
             <span className="ml-2 text-gray-600">Recordarme</span>
           </label>
-          <a
-            href="#"
-            className="text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            ¿Olvidaste tu contraseña?
-          </a>
+          <Link to="olvide-password" className="text-gray-600 hover:text-gray-900 transition-colors">¿Olvidaste tu contraseña?</Link>
         </div>
         {/* Submit Button */}
         <button

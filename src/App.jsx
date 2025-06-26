@@ -8,6 +8,7 @@ import { TaskProvider } from './context/TaskProvider'
 import Registro from './pages/Registro'
 import ConfirmarCuenta from './pages/ConfirmarCuenta'
 import OlvidePassword from './pages/OlvidePassword'
+import CambiarPassword from './pages/CambiarPassword'
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
                 <Route path='registro' element={<Registro />} />
                 <Route path='confirmar-cuenta/:token' element={<ConfirmarCuenta />} />
                 <Route path='olvide-password' element={<OlvidePassword />} />
-                <Route path='cambiar-password/:token' element={<OlvidePassword />} />
+                <Route path='olvide-password/:token' element={<CambiarPassword />} />
               </Route>
 
               <Route path='admin' element={<Admin />}>
