@@ -1,6 +1,6 @@
 import { useState } from "react"
-import Alerta from "../components/Alerta";
-import clienteAxios from "../config/axios";
+import Alerta from "../../components/Alerta";
+import clienteAxios from "../../config/axios";
 
 const OlvidePassword = () => {
     const [email, setEmail] = useState('');

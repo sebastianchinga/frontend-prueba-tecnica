@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import Alerta from "../components/Alerta"
-import clienteAxios from "../config/axios"
+import Alerta from "../../components/Alerta"
+import clienteAxios from "../../config/axios"
 import { useNavigate, useParams } from "react-router-dom"
 
 const CambiarPassword = () => {

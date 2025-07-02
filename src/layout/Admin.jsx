@@ -11,28 +11,28 @@ const Admin = () => {
     if (cargando) return 'Cargando...';
     return (
         <>
-            <header className="bg-white shadow-md border-b border-gray-200">
+            <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        {/* Logo/Título */}
+                        {/* Logo/Title */}
                         <div className="flex items-center">
-                            <h1 className="text-xl font-bold text-gray-900">Task Manager</h1>
+                            <h1 className="text-xl font-semibold text-gray-900">
+                                Panel de Proyectos
+                            </h1>
                         </div>
-                        {/* Navegación y botón de cerrar sesión */}
+                        {/* User Info & Logout */}
                         <div className="flex items-center space-x-4">
-                            {/* Información del usuario (opcional) */}
-                            <div className="hidden sm:flex items-center space-x-2">
-                                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <span className="text-white text-sm font-medium">{auth?.nombre && obtenerIniciales(auth.nombre)}</span>
+                            {/* User Avatar & Name */}
+                            <div className="flex items-center space-x-3">
+                                <div className="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center">
+                                    <span className="text-sm font-medium text-white">{auth?.nombre && obtenerIniciales(auth.nombre)}</span>
                                 </div>
-                                <span className="text-gray-700 text-sm">{auth?.nombre && auth.nombre}</span>
+                                <div className="hidden sm:block">
+                                    <p className="text-sm font-medium text-gray-900">{auth?.nombre && auth.nombre}</p>
+                                </div>
                             </div>
-                            {/* Botón de cerrar sesión */}
-                            <button
-                                onClick={cerrarSesion}
-                                type="button"
-                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
-                            >
+                            {/* Logout Button */}
+                            <button onClick={cerrarSesion} className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
                                 <svg
                                     className="w-4 h-4 mr-2"
                                     fill="none"
@@ -44,9 +44,9 @@ const Admin = () => {
                                         strokeLinejoin="round"
                                         strokeWidth={2}
                                         d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                                    />
+                                    ></path>
                                 </svg>
-                                Cerrar Sesión
+                                <span className="hidden sm:inline">Cerrar Sesión</span>
                             </button>
                         </div>
                     </div>
